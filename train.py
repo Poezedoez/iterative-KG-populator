@@ -1,25 +1,33 @@
 import sys
 sys.path.append('../spert/')
 sys.path.append('../NearestNeighBERT/')
-sys.path.append('../distantly-supervised-dataset/')
 import argparse
+import subprocess
 import spert
 from NearestNeighBERT import NearestNeighBERT
 
 class TrainWrapper:
-    def __init__(self, model_name, model_config, dataset, types, tokenizer, save_path): 
+    def __init__(self, model_name, train_config, train_path, validation_path, types_path, tokenizer_path, save_path): 
         if model_name.lower() == 'spert':
-            spert.train()
+            subprocess.run(["python", "spert.py", "train", 
+                            "--config", train_config,
+                            "--train_path", train_path,
+                            "--valid_path", validation_path,
+                            "--types_path", types_path,
+                            "--tokenizer_path", tokenizer_path,
+                            "--save_path", save_path])
         else:
-            nn = NearestNeighBERT().configure(model_config)
-            nn.train(dataset, tokenizer, save_path)
+            knn = NearestNeighBERT().configure(train_config)
+            knn.train(train_path, tokenizer_path, save_path)
+
+    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='train an entity/relation extractor')
     parser.add_argument('model', type=str, choices=['knn','spert'],
                         help="name of the model to train")    
     parser.add_argument('train_config', type=str,
-                        help="path to the model specific config file")
+                        help="path to the model specific train parameters")
     parser.add_argument('--train_path', type=str, default="data/train_dataset.json",
                         help="path to the train set")
     parser.add_argument('--validation_path', type=str, default="data/dev_dataset.json",
@@ -28,9 +36,9 @@ if __name__ == "__main__":
                         help='path to the ontology entity and relation types')
     parser.add_argument('--save_path', type=str, default="data/save/", 
                         help="path to the directory to save trained model in")
-    parser.add_argument('--tokenizer', type=str, default="data/scibert_scivocab_uncased")
+    parser.add_argument('--tokenizer_path', type=str, default="data/scibert_scivocab_uncased/")
 
     args = parser.parse_args()
-    trainer = TrainWrapper(args.model, args.train_config, args.train_path, 
-                           args.types_path, args.tokenizer, args.save_path)
+    trainer = TrainWrapper(args.model, args.train_config, args.train_path, args.validation_path,
+                           args.types_path, args.tokenizer_path, args.save_path)
 
