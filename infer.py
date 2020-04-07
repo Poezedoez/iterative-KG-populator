@@ -25,12 +25,13 @@ if __name__ == "__main__":
     parser.add_argument('model', type=str, choices=['knn','spert'],
                         help="name of the model to train")    
     parser.add_argument('infer_config', type=str,
-                        help="path to the model specific config file")
+                        help="path to the model specific config file for inference")
     parser.add_argument('--trained_model_path', type=str, default="data/save/",
                         help="path to the directory of trained model objects")
     parser.add_argument('--types_path', type=str, default="data/types.json",
-                        help='path to the ontology entity and relation types')
-    parser.add_argument('--tokenizer', type=str, default="data/scibert_scivocab_uncased")
+                        help='path to the file with ontology entity and relation types')
+    parser.add_argument('--tokenizer_path', type=str, default="data/scibert_scivocab_uncased",
+                        help="path to the directory of tokenizer/vocab/weights")
 
     args = parser.parse_args()
     example_inference_document = {
