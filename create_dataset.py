@@ -1,10 +1,19 @@
 import sys
 sys.path.append('../distantly-supervised-dataset/')
-from DistantlySupervisedDatasets import DistantlySupervisedDatasets, get_parser
+from DistantSupervisor import DistantSupervisor
+from argparser import get_parser
 
 if __name__ == "__main__":
     parser = get_parser()
     args = parser.parse_args()
-    dataset = DistantlySupervisedDatasets(args.ontology_entities_path, args.ontology_relations_path, args.data_path,
-                                         args.entity_embedding_path, args.output_path, args.timestamp_given, args.cos_theta)
-    dataset.create(label_function=args.label_function, selection=tuple(args.selection))
+    supervisor = DistantSupervisor(
+        data_path=args.data_path,
+        ontology_version=4,
+        output_path=args.output_path,
+        timestamp_given=args.timestamp_given,
+        cos_theta=args.cos_theta,
+        filter_sentences=args.filter_sentences,
+        token_pooling=args.token_pooling,
+        mention_pooling=args.mention_pooling
+    )
+    supervisor.supervise(label_strategy=args.label_strategy, selection=tuple(args.selection))

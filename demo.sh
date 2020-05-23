@@ -6,10 +6,8 @@ RUN_NAME="`date +%d_%m_%Y_%H_%M_%S`";
 
 LABELING="combined_labeling"
 V=5
-ENT_PATH="data/ontology/v${V}_ontology_entities.csv" 
-REL_PATH="data/ontology/v${V}_ontology_relations.csv" 
-EMB_PATH="data/ontology/v${V}_entity_embeddings.json"
 DATA_PATH="data/zeta_objects/"
+COS_THETA=0.83
 
 # Create a DSD - train set
 OUTPUT_PATH_TRAIN="data/demo/${RUN_NAME}/train/"
@@ -18,10 +16,10 @@ python create_dataset.py  \
     --selection 0 2 \
     --output_path $OUTPUT_PATH_TRAIN \
     --timestamp_given \
-    --label_function 2 \
-    --ontology_entities_path $ENT_PATH \
-    --ontology_relations_path $REL_PATH \
-    --entity_embedding_path $EMB_PATH
+    --label_strategy 2 \
+    --cos_theta $COS_THETA \
+    --ontology_version $V \
+    --filter_sentences
 
 # Create a DSD - validation set
 OUTPUT_PATH_DEV="data/demo/${RUN_NAME}/dev/"
@@ -30,15 +28,15 @@ python create_dataset.py  \
     --selection 2 3 \
     --output_path $OUTPUT_PATH_DEV \
     --timestamp_given \
-    --label_function 2 \
-    --ontology_entities_path $ENT_PATH \
-    --ontology_relations_path $REL_PATH \
-    --entity_embedding_path $EMB_PATH
+    --label_strategy 2 \
+    --cos_theta $COS_THETA \
+    --ontology_version $V \
+    --filter_sentences
 
 
-####################################################################
-###############          TRAIN MODELS                ###############
-####################################################################
+###################################################################
+##############          TRAIN MODELS                ###############
+###################################################################
 
 TOKENIZER_PATH="data/scibert_scivocab_cased/"
 TYPES_PATH="${OUTPUT_PATH_TRAIN}ontology_types.json" # equal to dev set types
