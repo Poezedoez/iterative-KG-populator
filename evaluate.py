@@ -223,21 +223,23 @@ def evaluate(gt_path, pred_path, train_path=None, split="all", print_results=Tru
     # for phrase, overlap in zip(entity_phrases, entity_overlap):
     #     if overlap == "new":
     #         print(phrase)
-
-    print("")
-    print("Evaluating overlap type *** {} ***".format(split))
-    print("")
-    print("--- Entities (named entity recognition (NER)) ---")
-    print("An entity is considered correct if the entity type and span is predicted correctly")
-    print("")
+    if print_results:
+        print("")
+        print("Evaluating overlap type *** {} ***".format(split))
+        print("")
+        print("--- Entities (named entity recognition (NER)) ---")
+        print("An entity is considered correct if the entity type and span is predicted correctly")
+        print("")
     ner_eval, total_entities = _score(gt_entities, pred_entities, entity_overlap, 
                                       entity_types, split, print_results=print_results)
-    print("")
-    print("--- Relations ---")
-    print("")
-    print("A relation is considered correct if the relation type and the two "
-            "related entity spans are predicted correctly")
-    print("")
+    
+    if print_results:
+        print("")
+        print("--- Relations ---")
+        print("")
+        print("A relation is considered correct if the relation type and the two "
+                "related entity spans are predicted correctly")
+        print("")
     rel_eval, total_relations = _score(gt_relations, pred_relations, relation_overlap, 
                                        relation_types, split, print_results=print_results)
 
@@ -354,7 +356,7 @@ if __name__ == "__main__":
     # evaluate(args.gt_path, args.pred_path, args.train_path, args.split)
 
     pred_folder = "../speer/data/spert/log/"
-    results, margin, total = eval_all_za(pred_folder, target="entities")
+    results, margin, total = eval_all_za(pred_folder, target="relations")
     for split in results:
         print("evaluating split |{}|...".format(split))
         for k, v in results[split].items():
