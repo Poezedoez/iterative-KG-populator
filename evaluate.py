@@ -320,6 +320,8 @@ def eval_all_za(predictions_folder, dataset=None, model=None, split=None, run=No
                 for d in [dataset] if dataset else ["za1", "za2", "za3"]:
                     gt_path = "../speer/data/datasets/{}/za_test.json".format(d)
                     pred_path = os.path.join(predictions_folder, "{}_eval_{}_{}/run1/predictions.json".format(d, m, frac))
+                    if m == "knn":
+                        pred_path = os.path.join(predictions_folder, "{}/eval/{}/predictions.json".format(d, frac))
                     if not os.path.exists(pred_path):
                         print("No prediction file for:", pred_path)
                         continue
@@ -355,8 +357,9 @@ if __name__ == "__main__":
     # args = parser.parse_args()
     # evaluate(args.gt_path, args.pred_path, args.train_path, args.split)
 
-    pred_folder = "../speer/data/spert/log/"
-    results, margin, total = eval_all_za(pred_folder, target="relations")
+    # pred_folder = "../speer/data/spert/log/"
+    pred_folder = '../NearestNeighBERT/data/save/'
+    results, margin, total = eval_all_za(pred_folder, target="entities", dataset="za1", model="knn")
     for split in results:
         print("evaluating split |{}|...".format(split))
         for k, v in results[split].items():
