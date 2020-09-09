@@ -1,5 +1,7 @@
 # KG population API #
 
+**WORK IN PROGRESS**
+
 ### What is this repository for? ###
 
 This repo is meant to demo how the distant supervision module can be used in conjunction with entity and relation extraction models. 
