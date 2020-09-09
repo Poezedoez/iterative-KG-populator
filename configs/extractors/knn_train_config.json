@@ -1,0 +1,9 @@
+{
+    "f_voting": "discrete",
+    "f_similarity": "L2",
+    "f_reduce": "mean",
+    "k": 1000,
+    "neg_label": "O",
+    "positive_multiplier": 3,
+    "faiss_gpu": false
+}

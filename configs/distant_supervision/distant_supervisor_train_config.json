@@ -1,0 +1,11 @@
+{
+    "selection": [0, 2],
+    "label_strategy": 2,
+    "cos_theta": 0.87,
+    "token_pooling": "none",
+    "mention_pooling": "none",
+    "filter_sentences": true,
+    "entity_fraction": 1,
+    "timestamp_given": true
+
+}
