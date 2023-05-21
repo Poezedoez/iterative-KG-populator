@@ -1,7 +1,5 @@
 # KG population tool #
 
-**WORK IN PROGRESS**
-
 ### What is this repository for? ###
 
 This repo is meant to demo how the distant supervision module can be used in conjunction with entity and relation extraction models. 
@@ -22,6 +20,8 @@ Same for the distant supervision module: choose label strategy and things as sim
 Default parameters, consisting of all the paths are expected as input in the functions and are not read from the config file.
 
 ### Demo ###
+
+**WORK IN PROGRESS**
 
 * Includes python demo, and command line demo. Uses three zeta objects as data, and an example document.
 
