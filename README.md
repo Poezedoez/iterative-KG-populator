@@ -1,4 +1,4 @@
-# KG population API #
+# KG population tool#
 
 **WORK IN PROGRESS**
 
